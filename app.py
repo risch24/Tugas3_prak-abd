@@ -67,15 +67,18 @@ st.dataframe(data)
 st.subheader("🎛 Pilih Jenis Grafik")
 tipe = st.selectbox(
     "Pilih grafik yang ingin ditampilkan:",
-    ["Bar Chart", "Pie Chart", "Line Chart", "Area Chart"]
+    ["Bar Chart", "Pie Chart", "Line Chart", "Area Chart", "Map Lokasi"]
 )
 
 if tipe == "Bar Chart":
     st.bar_chart(data.set_index("Dessert")["Kalori (kcal)"])
+
 elif tipe == "Line Chart":
     st.line_chart(data.set_index("Dessert")["Kalori (kcal)"])
+
 elif tipe == "Area Chart":
     st.area_chart(data.set_index("Dessert")["Kalori (kcal)"])
+
 elif tipe == "Pie Chart":
     fig, ax = plt.subplots()
     ax.pie(
@@ -86,14 +89,14 @@ elif tipe == "Pie Chart":
     )
     st.pyplot(fig)
 
-# MAP
-st.subheader("🗺 Lokasi Asal Dessert (Perkiraan)")
-map_data = pd.DataFrame({
-    "Dessert": data["Dessert"],
-    "lat": [41.9, 40.7, 48.8, 35.6, 40.4, -33.8, 35.6, -6.9, 51.5, 37.5],
-    "lon": [12.5, -74.0, 2.3, 139.7, -3.7, 151.2, 139.7, 107.6, -0.1, 127.0]
-})
-st.map(map_data)
+elif tipe == "Map Lokasi":
+    st.subheader("🗺 Lokasi Asal Dessert (Perkiraan)")
+    map_data = pd.DataFrame({
+        "Dessert": data["Dessert"],
+        "lat": [41.9, 40.7, 48.8, 35.6, 40.4, -33.8, 35.6, -6.9, 51.5, 37.5],
+        "lon": [12.5, -74.0, 2.3, 139.7, -3.7, 151.2, 139.7, 107.6, -0.1, 127.0]
+    })
+    st.map(map_data)
 
 # FILTER KALORI
 st.subheader("🔍 Filter Dessert Berdasarkan Kalori")
